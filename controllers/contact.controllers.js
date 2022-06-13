@@ -2,7 +2,7 @@ const { contacts } = require('../services');
 
 const listContacts = async (req, res, next) => {
     try {
-        const allContacts = await contacts.listContacts();
+        const allContacts = await contacts.listContacts(req.query);
         res.json(allContacts);
     } catch (e) {
         next(e);
@@ -25,11 +25,8 @@ const getContactById = async (req, res, next) => {
 
 const addContact = async (req, res, next) => {
     try {
-        // const { error } = schema.validate(req.body);
-        // if (error) {
-        //     res.status(400).json({ "message": "missing required field" });
-        // }       
-            const contact = await contacts.addContact(req.body);
+            const { _id } = req.user;
+            const contact = await contacts.addContact(req.body,_id);
             res.status(201).json(contact);
         
     } catch (e) {
