@@ -13,7 +13,8 @@ const signupUser = async (req, res, next) => {
         const user = await authService.registerUser(req.body);
         res.status(201).json({
             email: user.email,
-            subscription: user.subscription            
+            subscription: user.subscription,
+            avatarURL: user.avatarURL,
         });
     } catch (e) {
         next(e);
