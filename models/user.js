@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 const gravatar = require('gravatar');
+const { v4 } = require('uuid');
+
 
 const schema = new Schema({
     password: {
@@ -26,7 +28,19 @@ const schema = new Schema({
     default: function () {
       return gravatar.url(this.email,{}, true);
     }
-  }
+  },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    default: function () {
+      
+      return v4();
+    },
+    // required: [true, 'Verify token is required'],
+      },
 },{timestamps:true});
 
 const User = model('user', schema);
